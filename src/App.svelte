@@ -3,6 +3,7 @@
   import { writable } from 'svelte/store';
   import { setContext } from 'svelte';
   import NoteGrid from './NoteGrid.svelte';
+  import StartStop from './StartStop';
   const initialState = writable(createInitialState());
   setContext('value', initialState);
 </script>
@@ -22,5 +23,6 @@
 </style>
 
 <div class="App">
+  <StartStop />
   <NoteGrid />
 </div>

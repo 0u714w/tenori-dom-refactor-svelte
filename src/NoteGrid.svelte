@@ -3,8 +3,6 @@
   import NoteRow from './NoteRow.svelte';
 
   const context = getContext('value');
-
-  console.log($context);
 </script>
 
 <style>
