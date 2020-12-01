@@ -4,8 +4,11 @@
   import { setContext } from 'svelte';
   import NoteGrid from './NoteGrid.svelte';
   import StartStop from './StartStop';
+  import Controls from './Controls.svelte';
   const initialState = writable(createInitialState());
+  const tempo = writable(0.8);
   setContext('value', initialState);
+  setContext('tempo', tempo);
 </script>
 
 <style>
@@ -20,9 +23,14 @@
     font-weight: 500;
     src: url('./apercu_regular-webfont.woff');
   }
+  .App {
+    display: grid;
+    gap: 10px;
+  }
 </style>
 
 <div class="App">
   <StartStop />
   <NoteGrid />
+  <Controls />
 </div>

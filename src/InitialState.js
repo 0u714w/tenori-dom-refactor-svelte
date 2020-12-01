@@ -70,7 +70,6 @@ export default function createInitialState() {
     reverb: true,
     play: false,
     currentStep: 1,
-    tempo: 0.8,
     release: 1.5,
     octave: 4,
     volume: 0.3,
