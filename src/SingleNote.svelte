@@ -6,7 +6,6 @@
   export let stepNumber;
 
   const context = getContext('value');
-
   const updateStatus = () => {
     return context.update((store) => {
       const updateStore = { ...store };
@@ -16,6 +15,7 @@
       return updateStore;
     });
   };
+  console.log($context.currentStep);
 </script>
 
 <style>
@@ -23,10 +23,23 @@
     border: none;
     appearance: none;
     background-color: red;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
   }
-  button.active {
+  button.activeStep {
     background-color: green;
+  }
+  button.selected {
+    background-color: green;
+  }
+  button.playing {
+    background-color: black;
   }
 </style>
 
-<button class:active={step.status} on:click={updateStatus}>hi</button>
+<button
+  class:selected={step.status}
+  class:activeStep={$context.currentStep === stepNumber}
+  class:playing={$context.currentStep === stepNumber && step.status}
+  on:click={updateStatus} />
