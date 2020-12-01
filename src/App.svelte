@@ -1,4 +1,10 @@
 <script>
+  import createInitialState from './InitialState';
+  import { writable } from 'svelte/store';
+  import { setContext } from 'svelte';
+  const initialState = writable(createInitialState());
+
+  setContext('value', initialState);
 </script>
 
 <style>
