@@ -1,21 +1,40 @@
 <script>
   import { getContext } from 'svelte';
+  import ToneGenerator from './ToneGenerator';
   export let note;
   export let frequency;
   export let step;
   export let stepNumber;
 
   const context = getContext('value');
+
   const updateStatus = () => {
     return context.update((store) => {
       const updateStore = { ...store };
       updateStore.notes
         .filter((x) => x.note === note)
-        .map((y) => (y.steps[stepNumber].status = !y.steps[stepNumber].status));
+        .map((y) => (y.steps[stepNumber - 1].status = !y.steps[stepNumber - 1].status));
       return updateStore;
     });
   };
-  console.log($context.currentStep);
+  context.subscribe((store) => {
+    if (store.play) {
+      if (stepNumber === store.currentStep) {
+        const [noteToPlay] = store.notes
+          .filter((x) => x.note === note)
+          .map((y) => y.steps[stepNumber - 1].status);
+
+        if (noteToPlay) {
+          const options = {
+            note,
+            frequency,
+            ...store,
+          };
+          ToneGenerator(options);
+        }
+      }
+    }
+  });
 </script>
 
 <style>
@@ -23,7 +42,6 @@
     border: none;
     appearance: none;
     background-color: red;
-    border-radius: 50%;
     outline: none;
     cursor: pointer;
   }
@@ -40,6 +58,6 @@
 
 <button
   class:selected={step.status}
-  class:activeStep={$context.currentStep === stepNumber}
+  class:activeStep={$context.currentStep === stepNumber && $context.play}
   class:playing={$context.currentStep === stepNumber && step.status}
   on:click={updateStatus} />

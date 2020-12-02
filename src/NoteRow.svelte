@@ -15,6 +15,6 @@
 
 <div>
   {#each steps as step, i}
-    <SingleNote {step} {note} {frequency} stepNumber={i} />
+    <SingleNote {step} {note} {frequency} stepNumber={i + 1} />
   {/each}
 </div>
