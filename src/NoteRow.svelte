@@ -9,7 +9,7 @@
   div {
     display: grid;
     gap: 3px;
-    grid-template-columns: repeat(16, minmax(0, 60px));
+    grid-template-columns: repeat(16, minmax(0, auto));
   }
 </style>
 

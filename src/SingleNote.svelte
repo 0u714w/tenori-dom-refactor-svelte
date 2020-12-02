@@ -22,8 +22,7 @@
       if (stepNumber === store.currentStep) {
         const [noteToPlay] = store.notes
           .filter((x) => x.note === note)
-          .map((y) => y.steps[stepNumber - 1].status);
-
+          .map((x) => x.steps[stepNumber - 1].status);
         if (noteToPlay) {
           const options = {
             note,
@@ -41,23 +40,28 @@
   button {
     border: none;
     appearance: none;
-    background-color: red;
+    background-color: inherit;
     outline: none;
     cursor: pointer;
   }
-  button.activeStep {
-    background-color: green;
+  i {
+    color: red;
   }
-  button.selected {
-    background-color: green;
+  i.activeStep {
+    color: green;
   }
-  button.playing {
-    background-color: black;
+  i.selected {
+    color: green;
+  }
+  i.playing {
+    color: black;
   }
 </style>
 
-<button
-  class:selected={step.status}
-  class:activeStep={$context.currentStep === stepNumber && $context.play}
-  class:playing={$context.currentStep === stepNumber && step.status}
-  on:click={updateStatus} />
+<button on:click={updateStatus}>
+  <i
+    class:selected={step.status}
+    class:activeStep={$context.currentStep === stepNumber && $context.play}
+    class:playing={$context.currentStep === stepNumber && step.status && $context.play}
+    class="fas fa-circle" />
+</button>

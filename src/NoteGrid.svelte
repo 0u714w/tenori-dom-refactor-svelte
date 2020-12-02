@@ -9,7 +9,7 @@
   section {
     display: grid;
     gap: 3px;
-    grid-template-rows: repeat(16, minmax(0, 20px));
+    grid-template-rows: repeat(16, minmax(0, auto));
   }
 </style>
 

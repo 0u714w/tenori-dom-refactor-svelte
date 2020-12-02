@@ -26,6 +26,7 @@
   .App {
     display: grid;
     gap: 10px;
+    margin: 10px auto;
   }
 </style>
 
