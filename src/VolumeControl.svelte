@@ -24,6 +24,13 @@
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
   }
+  button {
+    border: none;
+    appearance: none;
+    background-color: inherit;
+    outline: none;
+    cursor: pointer;
+  }
 </style>
 
 <div>
