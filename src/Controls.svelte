@@ -1,6 +1,7 @@
 <script>
   import VolumeControl from './VolumeControl.svelte';
   import TempoControl from './TempoControl.svelte';
+  import ReleaseControl from './ReleaseControl.svelte';
 </script>
 
 <style>
@@ -14,4 +15,5 @@
 <section>
   <VolumeControl />
   <TempoControl />
+  <ReleaseControl />
 </section>
