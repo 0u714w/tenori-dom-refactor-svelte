@@ -1,12 +1,13 @@
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
 export default function ToneGenerator({ frequency, wave, octave, release, volume }) {
-  console.log(arguments)
   const waves = [
     'triangle',
     'sine',
     'square',
     'sawtooth',
   ];
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  // work on the release and attack settings. add an attack parameter?
   const oscillator = audioContext.createOscillator();
   const gainNode = audioContext.createGain();
   const compressor = audioContext.createDynamicsCompressor();
@@ -25,7 +26,4 @@ export default function ToneGenerator({ frequency, wave, octave, release, volume
     .connect(audioContext.destination);
   oscillator.start(now);
   oscillator.stop(now + release);
-  setTimeout(() => {
-    audioContext.close();
-  }, now + release * 1000);
 }
