@@ -7,6 +7,7 @@
   export let stepNumber;
 
   const context = getContext('value');
+  const currentStepContext = getContext('currentStep');
 
   const updateStatus = () => {
     return context.update((store) => {
@@ -17,17 +18,18 @@
       return updateStore;
     });
   };
-  context.subscribe((store) => {
-    if (store.play) {
-      if (stepNumber === store.currentStep) {
-        const [noteToPlay] = store.notes
+
+  currentStepContext.subscribe((step) => {
+    if ($context.play) {
+      if (stepNumber === step) {
+        const [noteToPlay] = $context.notes
           .filter((x) => x.note === note)
           .map((x) => x.steps[stepNumber - 1].status);
         if (noteToPlay) {
           const options = {
             note,
             frequency,
-            ...store,
+            ...$context,
           };
           ToneGenerator(options);
         }
@@ -61,7 +63,7 @@
 <button on:click={updateStatus}>
   <i
     class:selected={step.status}
-    class:activeStep={$context.currentStep === stepNumber && $context.play}
-    class:playing={$context.currentStep === stepNumber && step.status && $context.play}
+    class:activeStep={$currentStepContext === stepNumber && $context.play}
+    class:playing={$currentStepContext === stepNumber && step.status && $context.play}
     class="fas fa-circle" />
 </button>

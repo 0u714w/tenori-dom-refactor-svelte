@@ -3,6 +3,7 @@
   import { get } from 'svelte/store';
   const context = getContext('value');
   const tempoContext = getContext('tempo');
+  const currentStepContext = getContext('currentStep');
 
   let timer;
 
@@ -12,10 +13,9 @@
       updatedStore.play = !updatedStore.play;
       if (updatedStore.play) {
         timer = setInterval(() => {
-          context.update((store) => {
-            store.currentStep =
-              store.currentStep === 16 ? (store.currentStep -= 15) : (store.currentStep += 1);
-            return store;
+          currentStepContext.update((step) => {
+            step = step === 16 ? (step -= 15) : (step += 1);
+            return step;
           });
         }, 1000 * get(tempoContext));
       } else {
@@ -30,22 +30,24 @@
     if (play) {
       clearInterval(timer);
       timer = setInterval(() => {
-        context.update((store) => {
-          store.currentStep =
-            store.currentStep === 16 ? (store.currentStep -= 15) : (store.currentStep += 1);
-          return store;
+        currentStepContext.update((step) => {
+          step = step === 16 ? (step -= 15) : (step += 1);
+          return step;
         });
       }, tempo * 1000);
     }
   });
 
   const stop = () => {
-    return context.update((store) => {
+    context.update((store) => {
       clearInterval(timer);
       const updatedStore = { ...store };
       updatedStore.play = false;
-      updatedStore.currentStep = 1;
       return updatedStore;
+    });
+    currentStepContext.update((step) => {
+      step = 1;
+      return step;
     });
   };
 </script>
@@ -60,7 +62,7 @@
 
 <h1>{$tempoContext}</h1>
 <h1>{$context.play}</h1>
-<h1>{$context.currentStep}</h1>
+<h1>{$currentStepContext}</h1>
 <div>
   {#if $context.play}
     <button on:click={play}> <i class="fas fa-pause" /> </button>

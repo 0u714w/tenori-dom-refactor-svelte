@@ -8,6 +8,7 @@ export default function ToneGenerator({ frequency, wave, octave, release, volume
     'sawtooth',
   ];
   // work on the release and attack settings. add an attack parameter?
+  // add reverb?
   const oscillator = audioContext.createOscillator();
   const gainNode = audioContext.createGain();
   const compressor = audioContext.createDynamicsCompressor();

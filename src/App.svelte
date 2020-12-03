@@ -7,8 +7,10 @@
   import Controls from './Controls.svelte';
   const initialState = writable(createInitialState());
   const tempo = writable(0.8);
+  const currentStep = writable(1);
   setContext('value', initialState);
   setContext('tempo', tempo);
+  setContext('currentStep', currentStep);
 </script>
 
 <style>
