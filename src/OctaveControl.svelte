@@ -30,7 +30,7 @@
 </style>
 
 <div>
-  <button on:click={() => waveChange(1)}> <i class="fas fa-minus" /> </button>
+  <button on:click={() => waveChange(0)}> <i class="fas fa-minus" /> </button>
   <i class="fas fa-music" />
-  <button on:click={() => waveChange(0)}> <i class="fas fa-plus" /> </button>
+  <button on:click={() => waveChange(1)}> <i class="fas fa-plus" /> </button>
 </div>
