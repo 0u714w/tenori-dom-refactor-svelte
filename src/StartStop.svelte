@@ -52,20 +52,39 @@
 </script>
 
 <style>
-  div {
+  section {
     display: grid;
     gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: end;
+    margin: 10px 0;
+  }
+  div:nth-child(2) {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  button {
+    border: none;
+    appearance: none;
+    background-color: inherit;
+    outline: none;
+    cursor: pointer;
   }
 </style>
 
-<h1>{$tempoContext}</h1>
-<h1>{$context.play}</h1>
-<h1>{$currentStepContext}</h1>
-<div>
-  {#if $context.play}
-    <button on:click={play}> <i class="fas fa-pause" /> </button>
-  {:else}<button on:click={play}> <i class="fas fa-play" /> </button>{/if}
-  <button on:click={stop}><i class="fas fa-stop" /></button>
-  <button on:click={() => console.log($context)}>console log context</button>
-</div>
+<section>
+  <div>
+    <h1>TENORI DOM</h1>
+  </div>
+  <div>
+    {$currentStepContext}
+    {#if $context.play}
+      <button on:click={play}> <i class="fas fa-pause" /> </button>
+    {:else}<button on:click={play}> <i class="fas fa-play" /> </button>{/if}
+    <button on:click={stop}><i class="fas fa-stop" /></button>
+  </div>
+</section>

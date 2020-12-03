@@ -10,6 +10,7 @@
     display: grid;
     gap: 3px;
     grid-template-rows: repeat(16, minmax(0, auto));
+    margin-bottom: 30px;
   }
 </style>
 

@@ -17,6 +17,13 @@
   :global(body) {
     margin: 0;
     font-family: 'Apercu', Helvetica, sans-serif;
+    background-color: rgb(28, 28, 28);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 100vw;
+    height: 100vh;
   }
 
   @font-face {
@@ -28,7 +35,19 @@
   .App {
     display: grid;
     gap: 10px;
-    margin: 10px auto;
+    margin: auto;
+    background-color: white;
+    width: 80%;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 1.3em;
+  }
+
+  @media (max-width: 767px) {
+    .App {
+      width: 100%;
+      font-size: 1em;
+    }
   }
 </style>
 
