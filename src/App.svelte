@@ -6,7 +6,7 @@
   import StartStop from './StartStop';
   import Controls from './Controls.svelte';
   const initialState = writable(createInitialState());
-  const tempo = writable(0.8);
+  const tempo = writable(800);
   const currentStep = writable(1);
   setContext('value', initialState);
   setContext('tempo', tempo);

@@ -69,7 +69,6 @@ export default function createInitialState() {
   const initialValues = {
     reverb: true,
     play: false,
-    currentStep: 1,
     release: 1.5,
     octave: 4,
     volume: 0.3,

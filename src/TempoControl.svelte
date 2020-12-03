@@ -6,11 +6,11 @@
   const tempoChange = (num) => {
     return context.update((tempo) => {
       if (num > 0) {
-        tempo += 0.1;
+        tempo += 10;
       } else if (tempo <= 0) {
         tempo = 0;
       } else {
-        tempo -= 0.1;
+        tempo -= 10;
       }
       return tempo;
     });

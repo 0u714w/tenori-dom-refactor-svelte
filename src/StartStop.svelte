@@ -1,6 +1,5 @@
 <script>
   import { getContext } from 'svelte';
-  import { get } from 'svelte/store';
   const context = getContext('value');
   const tempoContext = getContext('tempo');
   const currentStepContext = getContext('currentStep');
@@ -17,7 +16,7 @@
             step = step === 16 ? (step -= 15) : (step += 1);
             return step;
           });
-        }, 1000 * get(tempoContext));
+        }, $tempoContext);
       } else {
         clearInterval(timer);
       }
@@ -26,7 +25,7 @@
   };
 
   tempoContext.subscribe((tempo) => {
-    const { play } = get(context);
+    const { play } = $context;
     if (play) {
       clearInterval(timer);
       timer = setInterval(() => {
@@ -34,7 +33,7 @@
           step = step === 16 ? (step -= 15) : (step += 1);
           return step;
         });
-      }, tempo * 1000);
+      }, tempo);
     }
   });
 
