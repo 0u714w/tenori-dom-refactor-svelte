@@ -60,6 +60,8 @@
   }
   i.playing {
     color: black;
+    transform: scale(1.4, 1.4);
+    transition: 0.1s ease-in-out;
   }
 </style>
 
