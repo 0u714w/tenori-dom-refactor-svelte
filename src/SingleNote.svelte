@@ -45,12 +45,15 @@
     background-color: inherit;
     outline: none;
     cursor: pointer;
+    transition: 0.1s ease-in-out;
   }
   i {
     color: red;
   }
   i.activeStep {
     color: green;
+    transform: scale(1.25, 1.25);
+    transition: 0.1s ease-in-out;
   }
   i.selected {
     color: green;

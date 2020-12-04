@@ -42,6 +42,15 @@
     border-radius: 3px;
     font-size: 1.3em;
   }
+  :global(button) {
+    transition: 0.28s ease-in-out;
+  }
+
+  :global(button:hover) {
+    color: rgb(120, 120, 120);
+    transform: scale(1.4, 1.4);
+    transition: 0.2s ease-in-out;
+  }
 
   @media (max-width: 767px) {
     .App {
