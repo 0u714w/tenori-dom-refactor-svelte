@@ -76,17 +76,21 @@ export default function createInitialState() {
     notes: [],
   }
     
-  notes.forEach(x => {
+  return notes.reduce((obj, { note, frequency }) => {
     const steps = Array.from({ length: 16 })
-    .reduce((arr, x, i) => {
+    .reduce((arr) => {
       return [...arr, { status: false} ]
     }, [])
-    initialValues.notes.push({
-      note: x.note,
-      frequency: x.frequency,
-      steps,
-    })
-  })
-  
-  return initialValues
+    return {
+      ...obj,
+      notes: [
+        ...obj.notes,
+        {
+          note,
+          frequency,
+          steps,
+        },
+      ]
+    }
+  }, initialValues)
 }
