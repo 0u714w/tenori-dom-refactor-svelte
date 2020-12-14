@@ -5,7 +5,10 @@
     "test": "web-test-runner \"src/**/*.test.js\""
   },
   "dependencies": {
-    "svelte": "^3.24.0"
+    "@apollo/client": "^3.3.6",
+    "graphql": "^15.4.0",
+    "svelte": "^3.24.0",
+    "svelte-apollo": "^0.4.0"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.0.4",
