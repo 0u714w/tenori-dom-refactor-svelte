@@ -1,10 +1,17 @@
 <script>
   import createInitialState from './InitialState';
+  import TestQuery from './TestQuery.svelte';
   import { writable } from 'svelte/store';
   import { setContext } from 'svelte';
   import NoteGrid from './NoteGrid.svelte';
   import StartStop from './StartStop';
   import Controls from './Controls.svelte';
+  import { initClient } from '@urql/svelte';
+
+  initClient({
+    url: 'https://tenori-api.herokuapp.com/',
+  });
+
   const initialState = writable(createInitialState());
   const tempo = writable(800);
   const currentStep = writable(1);
@@ -61,6 +68,7 @@
 </style>
 
 <div class="App">
+  <TestQuery />
   <StartStop />
   <NoteGrid />
   <Controls />

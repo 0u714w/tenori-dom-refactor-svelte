@@ -5,7 +5,7 @@
     "test": "web-test-runner \"src/**/*.test.js\""
   },
   "dependencies": {
-    "@apollo/client": "^3.3.6",
+    "@urql/svelte": "^1.1.4",
     "graphql": "^15.4.0",
     "svelte": "^3.24.0",
     "svelte-apollo": "^0.4.0"
