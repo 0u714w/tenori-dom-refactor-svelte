@@ -1,10 +1,17 @@
 <script>
   import createInitialState from './InitialState';
+  import Memory from './Memory.svelte';
   import { writable } from 'svelte/store';
   import { setContext } from 'svelte';
   import NoteGrid from './NoteGrid.svelte';
   import StartStop from './StartStop';
   import Controls from './Controls.svelte';
+  import { initClient } from '@urql/svelte';
+
+  initClient({
+    url: 'https://tenori-api.herokuapp.com/',
+  });
+
   const initialState = writable(createInitialState());
   const tempo = writable(800);
   const currentStep = writable(1);
@@ -24,6 +31,13 @@
     align-content: center;
     width: 100vw;
     height: 100vh;
+  }
+  :global(html) {
+    line-height: 1.15;
+  }
+
+  :global(*) {
+    box-sizing: border-box;
   }
 
   @font-face {
@@ -61,6 +75,7 @@
 </style>
 
 <div class="App">
+  <Memory />
   <StartStop />
   <NoteGrid />
   <Controls />
