@@ -1,6 +1,6 @@
 <script>
   import createInitialState from './InitialState';
-  import TestQuery from './TestQuery.svelte';
+  import Memory from './Memory.svelte';
   import { writable } from 'svelte/store';
   import { setContext } from 'svelte';
   import NoteGrid from './NoteGrid.svelte';
@@ -31,6 +31,13 @@
     align-content: center;
     width: 100vw;
     height: 100vh;
+  }
+  :global(html) {
+    line-height: 1.15;
+  }
+
+  :global(*) {
+    box-sizing: border-box;
   }
 
   @font-face {
@@ -68,7 +75,7 @@
 </style>
 
 <div class="App">
-  <TestQuery />
+  <Memory />
   <StartStop />
   <NoteGrid />
   <Controls />

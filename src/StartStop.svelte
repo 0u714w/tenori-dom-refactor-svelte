@@ -61,10 +61,16 @@
   }
   div:nth-child(2) {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 30px);
     align-items: center;
-    justify-content: center;
+    justify-content: end;
     height: 100%;
+    gap: 10px;
+    padding-right: 6px;
+  }
+
+  div:first-child {
+    margin-left: 10px;
   }
 
   button {

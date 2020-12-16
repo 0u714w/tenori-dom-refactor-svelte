@@ -55,7 +55,26 @@
   }
 </script>
 
+<style>
+  button {
+    border: none;
+    appearance: none;
+    background-color: inherit;
+    outline: none;
+    cursor: pointer;
+  }
+  div {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    gap: 10px;
+    justify-content: flex-end;
+    padding-right: 6px;
+  }
+</style>
+
 <div>
-  <button on:click={unPause}>Get setting</button>
-  <button on:click={saveSetting}>Save</button>
+  <button on:click={unPause}><i class="fas fa-random" /></button>
+  <button on:click={unPause}><i class="fas fa-file-download" /></button>
+  <button on:click={saveSetting}><i class="fas fa-save" /></button>
 </div>
