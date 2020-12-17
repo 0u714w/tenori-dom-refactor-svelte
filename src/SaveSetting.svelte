@@ -18,8 +18,7 @@
     `,
   });
 
-  const saveSetting = async (e) => {
-    e.preventDefault();
+  const saveSetting = async () => {
     console.log($context);
     const value = JSON.stringify($context);
     const result = await newSettingMutation({
