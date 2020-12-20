@@ -31,14 +31,17 @@
     }
     if (Object.values(errors).length === 0) {
       const value = JSON.stringify($context);
+
       const result = await newSettingMutation({
         setting: { name, value },
       });
-      console.log('here is the mutation result', result);
+
       open = false;
       settingName = '';
+
       if (result?.data?.createNewSetting?.setting) {
         const { id } = result.data.createNewSetting.setting;
+
         nameContext.update(() => name);
         successfulResult = {
           name,
@@ -46,6 +49,12 @@
         };
       }
     }
+  };
+
+  const toggle = () => {
+    errors = {};
+    open = !open;
+    successfulResult = false;
   };
 </script>
 
@@ -59,11 +68,14 @@
   }
 
   span {
+    display: inline-block;
     background-color: red;
     border-radius: 3px;
     color: black;
     font-size: 0.8em;
     justify-self: center;
+    padding: 2px 10px;
+    margin: 10px 0;
   }
 
   .result {
@@ -71,15 +83,19 @@
     gap: 10px;
     grid-template-columns: 1fr;
   }
+
+  .save-form {
+    text-align: center;
+  }
 </style>
 
-<button on:click={() => (open = !open)}><i class="fas fa-save" /></button>
+<button on:click={toggle}><i class="fas fa-save" /></button>
 <Modal bind:open>
-  <div>
+  <div class="save-form">
     <label for="name"> Name Your Setting </label>
     <input type="text" id="name" placeholder="Moonlight Sonata" bind:value={settingName} />
-    <button on:click={() => saveSetting(settingName)}>Submit</button>
-    {#each Object.values(errors) as error}<span>{error}</span>{/each}
+    <button on:click={() => saveSetting(settingName)}><i class="fas fa-paper-plane" /></button>
+    {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
   </div>
 </Modal>
 
