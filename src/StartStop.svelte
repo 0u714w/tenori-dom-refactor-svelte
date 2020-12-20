@@ -1,6 +1,7 @@
 <script>
   import { getContext } from 'svelte';
   const context = getContext('value');
+  const name = getContext('name');
   const tempoContext = getContext('tempo');
   const currentStepContext = getContext('currentStep');
 
@@ -59,6 +60,7 @@
     align-items: end;
     margin: 10px 0;
   }
+
   div:nth-child(2) {
     display: grid;
     grid-template-columns: repeat(3, 30px);
@@ -70,7 +72,10 @@
   }
 
   div:first-child {
+    display: grid;
     margin-left: 10px;
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: start;
   }
 
   button {
@@ -80,11 +85,15 @@
     outline: none;
     cursor: pointer;
   }
+  small {
+    color: rgb(120, 120, 120);
+  }
 </style>
 
 <section>
   <div>
     <h1>TENORI DOM</h1>
+    <small>{$name}</small>
   </div>
   <div>
     {$currentStepContext}
