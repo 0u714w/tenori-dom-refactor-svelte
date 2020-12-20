@@ -3,6 +3,7 @@
   import { getContext } from 'svelte';
 
   const context = getContext('value');
+  const nameContext = getContext('name');
   const randomSetting = operationStore(
     `
     query {
@@ -22,9 +23,10 @@
     randomSetting.context = { requestPolicy: 'cache-first' };
     randomSetting.context = { requestPolicy: 'network-only' };
     const {
-      getRandomSetting: { value },
+      getRandomSetting: { value, name },
     } = await randomSetting.data;
     const setting = JSON.parse(value);
+    nameContext.update(() => name);
     context.update((store) => {
       setting.play = false;
       if (store.play) {
