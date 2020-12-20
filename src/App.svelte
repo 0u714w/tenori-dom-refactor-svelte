@@ -15,6 +15,9 @@
   const initialState = writable(createInitialState());
   const tempo = writable(800);
   const currentStep = writable(1);
+  const name = writable('');
+
+  setContext('name', name);
   setContext('value', initialState);
   setContext('tempo', tempo);
   setContext('currentStep', currentStep);
@@ -52,6 +55,7 @@
     margin: auto;
     background-color: white;
     width: 80%;
+    max-width: 850px;
     padding: 5px;
     border-radius: 3px;
     font-size: 1.3em;
