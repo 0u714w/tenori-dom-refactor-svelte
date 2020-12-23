@@ -1,5 +1,6 @@
 <script>
   export let open = false;
+  export let loading = false;
 </script>
 
 <style>
@@ -62,7 +63,11 @@
     <div class="modal">
       <div class="button-div"><button type="button" on:click={() => (open = !open)}>X</button></div>
       <div class="content">
-        <slot />
+        {#if loading}
+          <div>Loading...</div>
+        {:else}
+          <slot />
+        {/if}
       </div>
     </div>
   </div>

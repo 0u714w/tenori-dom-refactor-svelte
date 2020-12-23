@@ -1,6 +1,7 @@
 <script>
   import RandomButton from './RandomButton.svelte';
   import SaveSetting from './SaveSetting.svelte';
+  import GetSetting from './GetSetting.svelte';
 </script>
 
 <style>
@@ -12,17 +13,10 @@
     justify-content: flex-end;
     padding-right: 6px;
   }
-  button {
-    border: none;
-    appearance: none;
-    background-color: inherit;
-    outline: none;
-    cursor: pointer;
-  }
 </style>
 
 <div>
   <RandomButton />
-  <button><i class="fas fa-file-download" /></button>
+  <GetSetting />
   <SaveSetting />
 </div>

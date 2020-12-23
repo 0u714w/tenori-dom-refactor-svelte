@@ -8,6 +8,7 @@
   let open = false;
   let settingName = '';
   let errors = {};
+  let loading = false;
   let successfulResult = false;
 
   const newSettingMutation = mutation({
@@ -35,6 +36,8 @@
       const result = await newSettingMutation({
         setting: { name, value },
       });
+
+      loading = result.loading;
 
       open = false;
       settingName = '';
@@ -90,7 +93,7 @@
 </style>
 
 <button on:click={toggle}><i class="fas fa-save" /></button>
-<Modal bind:open>
+<Modal bind:open {loading}>
   <div class="save-form">
     <label for="name"> Name Your Setting </label>
     <input type="text" id="name" placeholder="Moonlight Sonata" bind:value={settingName} />
