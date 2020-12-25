@@ -22,19 +22,21 @@
   const getRandomSetting = async () => {
     randomSetting.context = { requestPolicy: 'cache-first' };
     randomSetting.context = { requestPolicy: 'network-only' };
-    const {
-      getRandomSetting: { value, name },
-    } = await randomSetting.data;
-    const setting = JSON.parse(value);
-    nameContext.update(() => name);
-    context.update((store) => {
-      setting.play = false;
-      if (store.play) {
-        setting.play = true;
+    if (randomSetting.data) {
+      const {
+        getRandomSetting: { value, name },
+      } = await randomSetting.data;
+      const setting = JSON.parse(value);
+      nameContext.update(() => name);
+      context.update((store) => {
+        setting.play = false;
+        if (store.play) {
+          setting.play = true;
+          return setting;
+        }
         return setting;
-      }
-      return setting;
-    });
+      });
+    }
   };
 </script>
 
