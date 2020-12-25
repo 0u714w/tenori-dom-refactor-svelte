@@ -4,22 +4,28 @@
   const name = getContext('name');
   const tempoContext = getContext('tempo');
   const currentStepContext = getContext('currentStep');
-
-  let timer;
+  const intervals = getContext('timerIntervals');
 
   const play = () => {
     return context.update((store) => {
       const updatedStore = { ...store };
       updatedStore.play = !updatedStore.play;
       if (updatedStore.play) {
-        timer = setInterval(() => {
-          currentStepContext.update((step) => {
-            step = step === 16 ? (step -= 15) : (step += 1);
-            return step;
-          });
-        }, $tempoContext);
+        intervals.update((timers) => {
+          const interval = setInterval(() => {
+            currentStepContext.update((step) => {
+              step = step === 16 ? (step -= 15) : (step += 1);
+              return step;
+            });
+          }, $tempoContext);
+          timers.push(interval);
+          return timers.map((x, i, a) => (i !== a.length - 1 ? clearInterval(x) : x));
+        });
       } else {
-        clearInterval(timer);
+        intervals.update((timers) => {
+          timers.map((x) => clearInterval(x));
+          return [];
+        });
       }
       return updatedStore;
     });
@@ -28,19 +34,26 @@
   tempoContext.subscribe((tempo) => {
     const { play } = $context;
     if (play) {
-      clearInterval(timer);
-      timer = setInterval(() => {
-        currentStepContext.update((step) => {
-          step = step === 16 ? (step -= 15) : (step += 1);
-          return step;
-        });
-      }, tempo);
+      intervals.update((timers) => {
+        const interval = setInterval(() => {
+          currentStepContext.update((step) => {
+            step = step === 16 ? (step -= 15) : (step += 1);
+            return step;
+          });
+        }, tempo);
+        timers.push(interval);
+        return timers.map((x, i, a) => (i !== a.length - 1 ? clearInterval(x) : x));
+      });
     }
   });
 
   const stop = () => {
+    intervals.update((timers) => {
+      console.log(timers);
+      timers.map((x, i) => clearInterval(x));
+      return [];
+    });
     context.update((store) => {
-      clearInterval(timer);
       const updatedStore = { ...store };
       updatedStore.play = false;
       return updatedStore;
