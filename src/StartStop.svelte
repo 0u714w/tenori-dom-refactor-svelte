@@ -56,9 +56,8 @@
   section {
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: end;
-    margin: 10px 0;
+    max-height: 130px;
+    grid-template-columns: repeat(2, auto);
   }
 
   div:nth-child(2) {
@@ -74,7 +73,7 @@
   div:first-child {
     display: grid;
     margin-left: 10px;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
     justify-content: start;
   }
 
@@ -87,6 +86,10 @@
   }
   small {
     color: rgb(120, 120, 120);
+    min-height: 20px;
+  }
+  span {
+    display: inline-block;
   }
 </style>
 
@@ -96,7 +99,7 @@
     <small>{$name}</small>
   </div>
   <div>
-    {$currentStepContext}
+    <span>{$currentStepContext}</span>
     {#if $context.play}
       <button on:click={play}> <i class="fas fa-pause" /> </button>
     {:else}<button on:click={play}> <i class="fas fa-play" /> </button>{/if}

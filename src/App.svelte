@@ -55,7 +55,7 @@
     margin: auto;
     background-color: white;
     width: 80%;
-    max-width: 850px;
+    max-width: 800px;
     padding: 5px;
     border-radius: 3px;
     font-size: 1.3em;
