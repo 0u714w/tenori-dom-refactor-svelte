@@ -48,15 +48,15 @@
     transition: 0.1s ease-in-out;
   }
   i {
-    color: red;
+    color: grey;
   }
   i.activeStep {
-    color: green;
+    color: pink;
     transform: scale(1.25, 1.25);
     transition: 0.1s ease-in-out;
   }
   i.selected {
-    color: green;
+    color: aquamarine;
   }
   i.playing {
     color: black;

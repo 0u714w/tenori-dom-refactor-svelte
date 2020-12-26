@@ -36,6 +36,11 @@
     align-content: center;
     width: 100vw;
     height: 100vh;
+    background-image: url('./compBook.png');
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   :global(html) {
     line-height: 1.15;

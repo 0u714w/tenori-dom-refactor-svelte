@@ -98,19 +98,30 @@
     outline: none;
     cursor: pointer;
   }
+
   small {
+    visibility: hidden;
     color: rgb(120, 120, 120);
-    min-height: 20px;
+    min-height: 30px;
+    background-color: aquamarine;
+    border-radius: 3px;
+    padding: 5px 6px;
+    text-align: center;
   }
+
   span {
     display: inline-block;
+  }
+
+  .showName {
+    visibility: unset;
   }
 </style>
 
 <section>
   <div>
     <h1>TENORI DOM</h1>
-    <small>{$name}</small>
+    <small class:showName={$name.length}>{$name}</small>
   </div>
   <div>
     <span>{$currentStepContext}</span>
