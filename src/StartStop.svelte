@@ -5,6 +5,7 @@
   const tempoContext = getContext('tempo');
   const currentStepContext = getContext('currentStep');
   const intervals = getContext('timerIntervals');
+  const now = getContext('now');
 
   const play = () => {
     return context.update((store) => {
@@ -13,13 +14,11 @@
       if (updatedStore.play) {
         intervals.update((timers) => {
           const interval = setInterval(() => {
-            currentStepContext.update((step) => {
-              step = step === 16 ? (step -= 15) : (step += 1);
-              return step;
-            });
+            now.update(() => new Date().getTime());
+            currentStepContext.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
           }, $tempoContext);
           timers.push(interval);
-          return timers.map((x, i, a) => (i !== a.length - 1 ? clearInterval(x) : x));
+          return timers;
         });
       } else {
         intervals.update((timers) => {
@@ -34,22 +33,24 @@
   tempoContext.subscribe((tempo) => {
     const { play } = $context;
     if (play) {
-      intervals.update((timers) => {
-        const interval = setInterval(() => {
-          currentStepContext.update((step) => {
-            step = step === 16 ? (step -= 15) : (step += 1);
-            return step;
-          });
-        }, tempo);
-        timers.push(interval);
-        return timers.map((x, i, a) => (i !== a.length - 1 ? clearInterval(x) : x));
-      });
+      console.log('offset-->', tempo - (new Date().getTime() - $now));
+      setTimeout(() => {
+        intervals.update((timers) => {
+          currentStepContext.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
+          const interval = setInterval(() => {
+            now.update(() => new Date().getTime());
+            currentStepContext.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
+          }, tempo);
+          timers.push(interval);
+          return timers.map((x, i, a) => (i !== a.length - 1 ? clearInterval(x) : x));
+        });
+      }, tempo - (new Date().getTime() - $now));
+      now.update(() => new Date().getTime());
     }
   });
 
   const stop = () => {
     intervals.update((timers) => {
-      console.log(timers);
       timers.map((x, i) => clearInterval(x));
       return [];
     });

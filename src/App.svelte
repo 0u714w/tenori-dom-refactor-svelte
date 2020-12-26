@@ -21,11 +21,7 @@
   setContext('value', initialState);
   setContext('tempo', tempo);
   setContext('currentStep', currentStep);
-
-  // this will fix the setInterval issue? making a global array of intervals and only
-  // using the last one and clearing the rest.
-  // set a context 'now' and subtract the diff between interval hits. update 'now' with
-  // each new interval.
+  setContext('now', writable(new Date().getTime()));
   setContext('timerIntervals', writable([]));
 </script>
 
