@@ -83,6 +83,21 @@
       font-size: 1em;
     }
   }
+
+  @media (max-width: 375px) {
+    .App {
+      width: unset;
+      font-size: 1em;
+      padding: unset;
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 321px) {
+    .App {
+      height: 100vh;
+    }
+  }
 </style>
 
 <div class="App">
