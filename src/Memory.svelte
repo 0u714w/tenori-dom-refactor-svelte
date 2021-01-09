@@ -3,6 +3,7 @@
   import SaveSetting from './SaveSetting.svelte';
   import GetSetting from './GetSetting.svelte';
   import Reset from './Reset.svelte';
+  let isSaving = false;
 </script>
 
 <style>
@@ -18,7 +19,7 @@
 
 <div>
   <RandomButton />
-  <GetSetting />
-  <SaveSetting />
+  <GetSetting bind:isSaving />
+  <SaveSetting bind:isSaving />
   <Reset />
 </div>
