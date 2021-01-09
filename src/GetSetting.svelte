@@ -79,8 +79,14 @@
     margin: 10px 0;
   }
 
+  .errors {
+    text-align: center;
+  }
+
   .get-setting-form {
     display: grid;
+    grid-template-columns: min-content 1fr min-content;
+    gap: 10px;
     text-align: center;
   }
 </style>
@@ -91,6 +97,8 @@
     <label for="id-num"> ID </label>
     <input type="text" id="id-num" placeholder="Setting ID" bind:value={id} />
     <button on:click={() => getSetting(id)}><i class="fas fa-paper-plane" /></button>
+  </div>
+  <div class="errors">
     {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
   </div>
 </Modal>
