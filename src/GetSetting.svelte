@@ -2,6 +2,7 @@
   import { query, operationStore } from '@urql/svelte';
   import { getContext } from 'svelte';
   import Modal from './Modal.svelte';
+  export let isSaving = false;
 
   const context = getContext('value');
   const nameContext = getContext('name');
@@ -21,41 +22,43 @@
     }
     `,
     { id: id },
-    { pause: true, requestPolicy: 'cache-and-network' }
+    { pause: true, requestPolicy: 'cache-first' }
   );
 
-  query(getSettingQuery);
+  query(getSettingQuery).subscribe((query) => {
+    if (query?.data?.getSetting && !isSaving) {
+      errors = {};
+      query?.data?.getSetting && updateContext(query.data.getSetting);
+    } else {
+      errors.setting = 'No results found.';
+    }
+  });
 
-  const getSetting = async (id) => {
+  function getSetting() {
+    isSaving = false;
     $getSettingQuery.variables.id = id;
     $getSettingQuery.context.pause = false;
-  };
+    id = '';
+  }
 
-  const toggle = () => {
+  function toggle() {
     errors = {};
     open = !open;
-  };
+    id = '';
+  }
 
-  $: {
-    if ($getSettingQuery?.data?.getSetting === null) {
-      errors.setting = 'No results found.';
-    } else {
-      errors = {};
-    }
-
-    if ($getSettingQuery?.data?.getSetting && Object.entries(errors).length === 0) {
-      const { value, name } = getSettingQuery.data.getSetting;
-      const setting = JSON.parse(value);
-      nameContext.update(() => name);
-      context.update((store) => {
-        setting.play = false;
-        if (store.play) {
-          setting.play = true;
-          return setting;
-        }
+  function updateContext(query) {
+    const { value, name } = query;
+    const setting = JSON.parse(value);
+    nameContext.update(() => name);
+    context.update((store) => {
+      setting.play = false;
+      if (store.play) {
+        setting.play = true;
         return setting;
-      });
-    }
+      }
+      return setting;
+    });
   }
 </script>
 
@@ -81,6 +84,8 @@
 
   .errors {
     text-align: center;
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .get-setting-form {
@@ -93,11 +98,14 @@
 
 <button on:click={toggle}><i class="fas fa-file-download" /></button>
 <Modal bind:open loading={$getSettingQuery.fetching}>
-  <div class="get-setting-form">
+  <form
+    class="get-setting-form"
+    on:submit|preventDefault={getSetting}
+    on:keydown={(e) => e.key === 'Enter' && getSetting()}>
     <label for="id-num"> ID </label>
     <input type="text" id="id-num" placeholder="Setting ID" bind:value={id} />
-    <button on:click={() => getSetting(id)}><i class="fas fa-paper-plane" /></button>
-  </div>
+    <button disabled={!id.length} type="submit"><i class="fas fa-paper-plane" /></button>
+  </form>
   <div class="errors">
     {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
   </div>
