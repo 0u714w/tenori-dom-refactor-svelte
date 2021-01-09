@@ -2,6 +2,7 @@
   import { mutation } from '@urql/svelte';
   import { getContext } from 'svelte';
   import Modal from './Modal.svelte';
+  export let isSaving = false;
 
   const context = getContext('value');
   const nameContext = getContext('name');
@@ -43,22 +44,31 @@
       settingName = '';
 
       if (result?.data?.createNewSetting?.setting) {
-        const { id } = result.data.createNewSetting.setting;
-
+        isSaving = true;
+        const { id, value, name } = result.data.createNewSetting.setting;
+        const newSetting = JSON.parse(value);
         nameContext.update(() => name);
         successfulResult = {
           name,
           id,
         };
+        context.update((store) => {
+          newSetting.play = false;
+          if (store.play) {
+            newSetting.play = true;
+            return newSetting;
+          }
+          return newSetting;
+        });
       }
     }
   };
 
-  const toggle = () => {
+  function toggle() {
     errors = {};
     open = !open;
     successfulResult = false;
-  };
+  }
 </script>
 
 <style>
@@ -94,12 +104,12 @@
 
 <button on:click={toggle}><i class="fas fa-save" /></button>
 <Modal bind:open {loading}>
-  <div class="save-form">
+  <form class="save-form" on:submit|preventDefault={() => saveSetting(settingName)}>
     <label for="name"> Name Your Setting </label>
     <input type="text" id="name" placeholder="Moonlight Sonata" bind:value={settingName} />
-    <button on:click={() => saveSetting(settingName)}><i class="fas fa-paper-plane" /></button>
+    <button disabled={!settingName.length} type="submit"><i class="fas fa-paper-plane" /></button>
     {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
-  </div>
+  </form>
 </Modal>
 
 <Modal open={!!successfulResult}>
