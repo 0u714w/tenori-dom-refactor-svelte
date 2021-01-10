@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   export let open = false;
   export let loading = false;
 </script>
@@ -59,8 +60,8 @@
 </style>
 
 {#if open}
-  <div class="overlay">
-    <div class="modal">
+  <div class="overlay" transition:fade={{ delay: 10, duration: 130, amount: 10 }}>
+    <div class="modal" transition:fade={{ delay: 10, duration: 130, amount: 10 }}>
       <div class="button-div"><button type="button" on:click={() => (open = !open)}>X</button></div>
       <div class="content">
         {#if loading}
