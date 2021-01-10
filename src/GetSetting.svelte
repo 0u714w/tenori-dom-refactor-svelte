@@ -60,6 +60,10 @@
       return setting;
     });
   }
+
+  function focus(element) {
+    element.focus();
+  }
 </script>
 
 <style>
@@ -80,6 +84,10 @@
     justify-self: center;
     padding: 2px 10px;
     margin: 10px 0;
+  }
+
+  input {
+    outline: none;
   }
 
   .errors {
@@ -103,7 +111,7 @@
     on:submit|preventDefault={getSetting}
     on:keydown={(e) => e.key === 'Enter' && getSetting()}>
     <label for="id-num"> ID </label>
-    <input type="text" id="id-num" placeholder="Setting ID" bind:value={id} />
+    <input type="text" id="id-num" placeholder="Setting ID" bind:value={id} use:focus />
     <button disabled={!id.length} type="submit"><i class="fas fa-paper-plane" /></button>
   </form>
   <div class="errors">

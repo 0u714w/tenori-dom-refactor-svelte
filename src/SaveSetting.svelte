@@ -69,6 +69,10 @@
     open = !open;
     successfulResult = false;
   }
+
+  function focus(element) {
+    element.focus();
+  }
 </script>
 
 <style>
@@ -91,6 +95,10 @@
     margin: 10px 0;
   }
 
+  input {
+    outline: none;
+  }
+
   .result {
     display: grid;
     gap: 10px;
@@ -106,7 +114,12 @@
 <Modal bind:open {loading}>
   <form class="save-form" on:submit|preventDefault={() => saveSetting(settingName)}>
     <label for="name"> Name Your Setting </label>
-    <input type="text" id="name" placeholder="Moonlight Sonata" bind:value={settingName} />
+    <input
+      type="text"
+      id="name"
+      placeholder="Moonlight Sonata"
+      bind:value={settingName}
+      use:focus />
     <button disabled={!settingName.length} type="submit"><i class="fas fa-paper-plane" /></button>
     {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
   </form>
