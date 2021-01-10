@@ -31,6 +31,9 @@
     if (name.trim().length < 2) {
       errors['name'] = 'Must be at least 2 characters.';
     }
+    if (!$context.notes.flatMap((x) => x.steps).some((x) => !!x.status)) {
+      errors['empty'] = 'Empty settings are boring...';
+    }
     if (Object.values(errors).length === 0) {
       const value = JSON.stringify($context);
 
@@ -68,9 +71,11 @@
     errors = {};
     open = !open;
     successfulResult = false;
+    settingName = '';
   }
 
   function focus(element) {
+    settingName = '';
     element.focus();
   }
 </script>
@@ -86,9 +91,8 @@
 
   span {
     display: inline-block;
-    background-color: red;
+    background-color: pink;
     border-radius: 3px;
-    color: black;
     font-size: 0.8em;
     justify-self: center;
     padding: 2px 10px;
