@@ -47,10 +47,6 @@
     color: #43414e;
   }
 
-  :global(i) {
-    color: #43414e;
-  }
-
   :global(*) {
     box-sizing: border-box;
   }
