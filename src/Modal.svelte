@@ -41,7 +41,7 @@
     border: none;
     appearance: none;
     color: white;
-    background-color: black;
+    background-color: #43414e;
     outline: none;
     cursor: pointer;
   }

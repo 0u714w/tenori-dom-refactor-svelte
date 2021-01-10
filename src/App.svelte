@@ -44,6 +44,11 @@
   }
   :global(html) {
     line-height: 1.15;
+    color: #43414e;
+  }
+
+  :global(i) {
+    color: #43414e;
   }
 
   :global(*) {

@@ -59,7 +59,7 @@
     color: aquamarine;
   }
   i.playing {
-    color: black;
+    color: #43414e;
     transform: scale(1.4, 1.4);
     transition: 0.1s ease-in-out;
   }

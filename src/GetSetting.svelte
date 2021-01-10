@@ -79,7 +79,6 @@
     display: inline-block;
     background-color: red;
     border-radius: 3px;
-    color: black;
     font-size: 0.8em;
     justify-self: center;
     padding: 2px 10px;
