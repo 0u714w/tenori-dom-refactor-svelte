@@ -108,6 +108,21 @@
   .save-form {
     text-align: center;
   }
+
+  small {
+    color: rgb(120, 120, 120);
+    min-height: 30px;
+    background-color: aquamarine;
+    border-radius: 3px;
+    padding: 5px 6px;
+    text-align: center;
+  }
+  .saved-result {
+    display: grid;
+    grid-template-columns: min-content;
+    gap: 15px;
+    justify-content: center;
+  }
 </style>
 
 <button on:click={toggle}><i class="fas fa-save" /></button>
@@ -130,7 +145,9 @@
     <div>
       Saved sucessfully! If you'd like to recall this at a later time, save the name and id.
     </div>
-    <div>{successfulResult.name}</div>
-    <div>{successfulResult.id}</div>
+    <div class="saved-result">
+      <small>{successfulResult.name}</small>
+      <small>{successfulResult.id}</small>
+    </div>
   </div>
 </Modal>
