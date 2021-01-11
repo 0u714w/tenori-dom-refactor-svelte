@@ -77,7 +77,7 @@
 
   span {
     display: inline-block;
-    background-color: red;
+    background-color: pink;
     border-radius: 3px;
     font-size: 0.8em;
     justify-self: center;
