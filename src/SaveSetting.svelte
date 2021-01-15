@@ -31,7 +31,7 @@
     if (name.trim().length < 2) {
       errors['name'] = 'Must be at least 2 characters.';
     }
-    if (!$context.notes.flatMap((x) => x.steps).some((x) => !!x.status)) {
+    if (!$context.notes.flatMap((x) => x.steps).some(({ status }) => !!status)) {
       errors['empty'] = 'Empty settings are boring...';
     }
     if (Object.values(errors).length === 0) {

@@ -33,10 +33,8 @@
   tempoContext.subscribe((tempo) => {
     const { play } = $context;
     if (play) {
-      console.log('offset-->', tempo - (new Date().getTime() - $now));
       setTimeout(() => {
         intervals.update((timers) => {
-          currentStepContext.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
           const interval = setInterval(() => {
             now.update(() => new Date().getTime());
             currentStepContext.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
