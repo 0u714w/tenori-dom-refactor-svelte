@@ -8,8 +8,11 @@
   import Controls from './Controls.svelte';
   import { initClient } from '@urql/svelte';
 
+  const dev = import.meta.env.NODE_ENV === 'development';
+  const url = dev ? 'http://localhost:3000' : 'https://tenori-api.herokuapp.com/';
+
   initClient({
-    url: 'https://tenori-api.herokuapp.com/',
+    url,
   });
 
   const initialState = writable(createInitialState());
@@ -24,6 +27,13 @@
   setContext('now', writable(new Date().getTime()));
   setContext('timerIntervals', writable([]));
 </script>
+
+<div class="App">
+  <Memory />
+  <StartStop />
+  <NoteGrid />
+  <Controls />
+</div>
 
 <style>
   :global(body) {
@@ -100,10 +110,3 @@
     }
   }
 </style>
-
-<div class="App">
-  <Memory />
-  <StartStop />
-  <NoteGrid />
-  <Controls />
-</div>
