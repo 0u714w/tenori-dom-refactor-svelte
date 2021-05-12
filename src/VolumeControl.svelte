@@ -1,10 +1,8 @@
 <script>
-  import { getContext } from 'svelte';
-
-  const context = getContext('value');
+  import { tenoriState } from './stores';
 
   const volumeChange = (num) => {
-    return context.update((store) => {
+    return tenoriState.update((store) => {
       const updatedStore = { ...store };
       if (num > 0) {
         updatedStore.volume += 0.1;
@@ -17,6 +15,12 @@
     });
   };
 </script>
+
+<div>
+  <button on:click={() => volumeChange(0)}> <i class="fas fa-minus" /> </button>
+  <i class="fas fa-volume-up" />
+  <button on:click={() => volumeChange(1)}> <i class="fas fa-plus" /> </button>
+</div>
 
 <style>
   div {
@@ -32,9 +36,3 @@
     cursor: pointer;
   }
 </style>
-
-<div>
-  <button on:click={() => volumeChange(0)}> <i class="fas fa-minus" /> </button>
-  <i class="fas fa-volume-up" />
-  <button on:click={() => volumeChange(1)}> <i class="fas fa-plus" /> </button>
-</div>

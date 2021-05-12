@@ -1,8 +1,5 @@
 <script>
-  import createInitialState from './InitialState';
   import Memory from './Memory.svelte';
-  import { writable } from 'svelte/store';
-  import { setContext } from 'svelte';
   import NoteGrid from './NoteGrid.svelte';
   import StartStop from './StartStop';
   import Controls from './Controls.svelte';
@@ -14,18 +11,6 @@
   initClient({
     url,
   });
-
-  const initialState = writable(createInitialState());
-  const tempo = writable(800);
-  const currentStep = writable(1);
-  const name = writable('');
-
-  setContext('name', name);
-  setContext('value', initialState);
-  setContext('tempo', tempo);
-  setContext('currentStep', currentStep);
-  setContext('now', writable(new Date().getTime()));
-  setContext('timerIntervals', writable([]));
 </script>
 
 <div class="App">

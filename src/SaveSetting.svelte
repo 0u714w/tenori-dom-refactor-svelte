@@ -1,11 +1,9 @@
 <script>
   import { mutation } from '@urql/svelte';
-  import { getContext } from 'svelte';
+  import { tenoriState, nameState } from './stores.js';
   import Modal from './Modal.svelte';
   export let isSaving = false;
 
-  const context = getContext('value');
-  const nameContext = getContext('name');
   let open = false;
   let settingName = '';
   let errors = {};
@@ -31,11 +29,11 @@
     if (name.trim().length < 2) {
       errors['name'] = 'Must be at least 2 characters.';
     }
-    if (!$context.notes.flatMap((x) => x.steps).some(({ status }) => !!status)) {
+    if (!$tenoriState.notes.flatMap((x) => x.steps).some(({ status }) => !!status)) {
       errors['empty'] = 'Empty settings are boring...';
     }
     if (Object.values(errors).length === 0) {
-      const value = JSON.stringify($context);
+      const value = JSON.stringify($tenoriState);
 
       const result = await newSettingMutation({
         setting: { name, value },
@@ -50,12 +48,12 @@
         isSaving = true;
         const { id, value, name } = result.data.createNewSetting.setting;
         const newSetting = JSON.parse(value);
-        nameContext.update(() => name);
+        nameState.update(() => name);
         successfulResult = {
           name,
           id,
         };
-        context.update((store) => {
+        tenoriState.update((store) => {
           newSetting.play = false;
           if (store.play) {
             newSetting.play = true;
@@ -79,6 +77,34 @@
     element.focus();
   }
 </script>
+
+<button on:click={toggle}><i class="fas fa-save" /></button>
+<Modal bind:open {loading}>
+  <form class="save-form" on:submit|preventDefault={() => saveSetting(settingName)}>
+    <label for="name"> Name Your Setting </label>
+    <input
+      type="text"
+      id="name"
+      placeholder="Moonlight Sonata"
+      bind:value={settingName}
+      use:focus
+    />
+    <button disabled={!settingName.length} type="submit"><i class="fas fa-paper-plane" /></button>
+    {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
+  </form>
+</Modal>
+
+<Modal open={!!successfulResult}>
+  <div class="result">
+    <div>
+      Saved sucessfully! If you'd like to recall this at a later time, save the name and id.
+    </div>
+    <div class="saved-result">
+      <small>{successfulResult.name}</small>
+      <small>{successfulResult.id}</small>
+    </div>
+  </div>
+</Modal>
 
 <style>
   button {
@@ -128,30 +154,3 @@
     justify-content: center;
   }
 </style>
-
-<button on:click={toggle}><i class="fas fa-save" /></button>
-<Modal bind:open {loading}>
-  <form class="save-form" on:submit|preventDefault={() => saveSetting(settingName)}>
-    <label for="name"> Name Your Setting </label>
-    <input
-      type="text"
-      id="name"
-      placeholder="Moonlight Sonata"
-      bind:value={settingName}
-      use:focus />
-    <button disabled={!settingName.length} type="submit"><i class="fas fa-paper-plane" /></button>
-    {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
-  </form>
-</Modal>
-
-<Modal open={!!successfulResult}>
-  <div class="result">
-    <div>
-      Saved sucessfully! If you'd like to recall this at a later time, save the name and id.
-    </div>
-    <div class="saved-result">
-      <small>{successfulResult.name}</small>
-      <small>{successfulResult.id}</small>
-    </div>
-  </div>
-</Modal>

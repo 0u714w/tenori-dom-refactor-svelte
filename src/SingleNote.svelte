@@ -1,16 +1,13 @@
 <script>
-  import { getContext } from 'svelte';
+  import { tenoriState, currentStep } from './stores.js';
   import ToneGenerator from './ToneGenerator';
   export let note;
   export let frequency;
   export let step;
   export let stepNumber;
 
-  const context = getContext('value');
-  const currentStepContext = getContext('currentStep');
-
   const updateStatus = () => {
-    return context.update((store) => {
+    return tenoriState.update((store) => {
       const updateStore = { ...store };
       updateStore.notes
         .filter((x) => x.note === note)
@@ -19,17 +16,17 @@
     });
   };
 
-  currentStepContext.subscribe((step) => {
-    if ($context.play) {
+  currentStep.subscribe((step) => {
+    if ($tenoriState.play) {
       if (stepNumber === step) {
-        const [noteToPlay] = $context.notes
+        const [noteToPlay] = $tenoriState.notes
           .filter((x) => x.note === note)
           .map((x) => x.steps[stepNumber - 1].status);
         if (noteToPlay) {
           const options = {
             note,
             frequency,
-            ...$context,
+            ...$tenoriState,
           };
           ToneGenerator(options);
         }
@@ -37,6 +34,15 @@
     }
   });
 </script>
+
+<button on:click={updateStatus}>
+  <i
+    class:selected={step.status}
+    class:activeStep={$currentStep === stepNumber && $tenoriState.play}
+    class:playing={$currentStep === stepNumber && step.status && $tenoriState.play}
+    class="fas fa-circle"
+  />
+</button>
 
 <style>
   button {
@@ -64,11 +70,3 @@
     transition: 0.1s ease-in-out;
   }
 </style>
-
-<button on:click={updateStatus}>
-  <i
-    class:selected={step.status}
-    class:activeStep={$currentStepContext === stepNumber && $context.play}
-    class:playing={$currentStepContext === stepNumber && step.status && $context.play}
-    class="fas fa-circle" />
-</button>
