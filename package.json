@@ -8,7 +8,8 @@
     "@urql/svelte": "^1.1.4",
     "graphql": "^15.4.0",
     "svelte": "^3.24.0",
-    "svelte-apollo": "^0.4.0"
+    "svelte-apollo": "^0.4.0",
+    "tone": "^14.7.77"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.0.4",
