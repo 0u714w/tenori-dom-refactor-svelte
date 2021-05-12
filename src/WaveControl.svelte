@@ -1,9 +1,8 @@
 <script>
-  import { getContext } from 'svelte';
+  import { tenoriState } from './stores';
 
-  const context = getContext('value');
   const waveChange = (num) => {
-    context.update((store) => {
+    tenoriState.update((store) => {
       if (num > 0) {
         if (store.wave === 3) {
           store.wave = 0;
@@ -22,6 +21,12 @@
   };
 </script>
 
+<div>
+  <button on:click={() => waveChange(1)}> <i class="fas fa-minus" /> </button>
+  <i class="fas fa-wave-square" />
+  <button on:click={() => waveChange(0)}> <i class="fas fa-plus" /> </button>
+</div>
+
 <style>
   div {
     display: grid;
@@ -36,9 +41,3 @@
     cursor: pointer;
   }
 </style>
-
-<div>
-  <button on:click={() => waveChange(1)}> <i class="fas fa-minus" /> </button>
-  <i class="fas fa-wave-square" />
-  <button on:click={() => waveChange(0)}> <i class="fas fa-plus" /> </button>
-</div>

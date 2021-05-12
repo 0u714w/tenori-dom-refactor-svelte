@@ -1,9 +1,13 @@
 <script>
-  import { getContext } from 'svelte';
+  import { tenoriState } from './stores';
   import NoteRow from './NoteRow.svelte';
-
-  const context = getContext('value');
 </script>
+
+<section>
+  {#each $tenoriState.notes as note}
+    <NoteRow {...note} />
+  {/each}
+</section>
 
 <style>
   section {
@@ -13,9 +17,3 @@
     margin-bottom: 30px;
   }
 </style>
-
-<section>
-  {#each $context.notes as note}
-    <NoteRow {...note} />
-  {/each}
-</section>

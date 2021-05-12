@@ -1,24 +1,20 @@
 <script>
-  import { getContext } from 'svelte';
+  import { nameState, tenoriState, currentStep, timerIntervals, tempo } from './stores';
   import createInitialState from './InitialState';
 
-  const context = getContext('value');
-  const nameContext = getContext('name');
-  const currentStep = getContext('currentStep');
-  const tempo = getContext('tempo');
-  const intervals = getContext('timerIntervals');
-
   const reset = () => {
-    context.update(() => createInitialState());
-    nameContext.update(() => '');
+    tenoriState.update(() => createInitialState());
+    nameState.update(() => '');
     currentStep.update(() => 1);
     tempo.update(() => 800);
-    intervals.update((timers) => {
+    timerIntervals.update((timers) => {
       timers.map((x) => clearInterval(x));
       return [];
     });
   };
 </script>
+
+<button on:click={reset}><i class="fas fa-trash-alt" /></button>
 
 <style>
   button {
@@ -29,5 +25,3 @@
     cursor: pointer;
   }
 </style>
-
-<button on:click={reset}><i class="fas fa-trash-alt" /></button>

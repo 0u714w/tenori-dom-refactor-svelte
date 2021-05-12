@@ -1,9 +1,8 @@
 <script>
-  import { getContext } from 'svelte';
+  import { tenoriState } from './stores.js';
 
-  const context = getContext('value');
   const releaseChange = (num) => {
-    return context.update((store) => {
+    return tenoriState.update((store) => {
       if (num > 0) {
         store.release += 0.1;
       } else if (store.release <= 0) {
@@ -15,6 +14,12 @@
     });
   };
 </script>
+
+<div>
+  <button on:click={() => releaseChange(0)}> <i class="fas fa-minus" /> </button>
+  <i class="fas fa-ruler" />
+  <button on:click={() => releaseChange(1)}> <i class="fas fa-plus" /> </button>
+</div>
 
 <style>
   div {
@@ -30,9 +35,3 @@
     cursor: pointer;
   }
 </style>
-
-<div>
-  <button on:click={() => releaseChange(0)}> <i class="fas fa-minus" /> </button>
-  <i class="fas fa-ruler" />
-  <button on:click={() => releaseChange(1)}> <i class="fas fa-plus" /> </button>
-</div>

@@ -1,27 +1,21 @@
 <script>
-  import { getContext } from 'svelte';
-  const context = getContext('value');
-  const name = getContext('name');
-  const tempoContext = getContext('tempo');
-  const currentStepContext = getContext('currentStep');
-  const intervals = getContext('timerIntervals');
-  const now = getContext('now');
+  import { timerIntervals, tenoriState, nameState, tempo, currentStep, now } from './stores';
 
   const play = () => {
-    return context.update((store) => {
+    return tenoriState.update((store) => {
       const updatedStore = { ...store };
       updatedStore.play = !updatedStore.play;
       if (updatedStore.play) {
-        intervals.update((timers) => {
+        timerIntervals.update((timers) => {
           const interval = setInterval(() => {
             now.update(() => new Date().getTime());
-            currentStepContext.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
-          }, $tempoContext);
+            currentStep.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
+          }, $tempo);
           timers.push(interval);
           return timers;
         });
       } else {
-        intervals.update((timers) => {
+        timerIntervals.update((timers) => {
           timers.map((x) => clearInterval(x));
           return [];
         });
@@ -30,14 +24,14 @@
     });
   };
 
-  tempoContext.subscribe((tempo) => {
-    const { play } = $context;
+  tempo.subscribe((tempo) => {
+    const { play } = $tenoriState;
     if (play) {
       setTimeout(() => {
-        intervals.update((timers) => {
+        timerIntervals.update((timers) => {
           const interval = setInterval(() => {
             now.update(() => new Date().getTime());
-            currentStepContext.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
+            currentStep.update((step) => (step = step === 16 ? (step -= 15) : (step += 1)));
           }, tempo);
           timers.push(interval);
           return timers.map((x, i, a) => (i !== a.length - 1 ? clearInterval(x) : x));
@@ -48,21 +42,35 @@
   });
 
   const stop = () => {
-    intervals.update((timers) => {
+    timerIntervals.update((timers) => {
       timers.map((x, i) => clearInterval(x));
       return [];
     });
-    context.update((store) => {
+    tenoriState.update((store) => {
       const updatedStore = { ...store };
       updatedStore.play = false;
       return updatedStore;
     });
-    currentStepContext.update((step) => {
+    currentStep.update((step) => {
       step = 1;
       return step;
     });
   };
 </script>
+
+<section>
+  <div>
+    <h1>TENORI DOM</h1>
+    <small class:showName={$nameState.length}>{$nameState}</small>
+  </div>
+  <div>
+    <span>{$currentStep}</span>
+    {#if $tenoriState.play}
+      <button on:click={play}> <i class="fas fa-pause" /> </button>
+    {:else}<button on:click={play}> <i class="fas fa-play" /> </button>{/if}
+    <button on:click={stop}><i class="fas fa-stop" /></button>
+  </div>
+</section>
 
 <style>
   section {
@@ -115,17 +123,3 @@
     visibility: unset;
   }
 </style>
-
-<section>
-  <div>
-    <h1>TENORI DOM</h1>
-    <small class:showName={$name.length}>{$name}</small>
-  </div>
-  <div>
-    <span>{$currentStepContext}</span>
-    {#if $context.play}
-      <button on:click={play}> <i class="fas fa-pause" /> </button>
-    {:else}<button on:click={play}> <i class="fas fa-play" /> </button>{/if}
-    <button on:click={stop}><i class="fas fa-stop" /></button>
-  </div>
-</section>

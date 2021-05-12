@@ -1,9 +1,7 @@
 <script>
   import { operationStore, query } from '@urql/svelte';
-  import { getContext } from 'svelte';
+  import { nameState, tenoriState } from './stores';
 
-  const context = getContext('value');
-  const nameContext = getContext('name');
   const randomSetting = operationStore(
     `
     query {
@@ -27,8 +25,8 @@
         getRandomSetting: { value, name },
       } = await randomSetting.data;
       const setting = JSON.parse(value);
-      nameContext.update(() => name);
-      context.update((store) => {
+      nameState.update(() => name);
+      tenoriState.update((store) => {
         setting.play = false;
         if (store.play) {
           setting.play = true;
@@ -40,6 +38,8 @@
   };
 </script>
 
+<button on:click={getRandomSetting}><i class="fas fa-random" /></button>
+
 <style>
   button {
     border: none;
@@ -49,5 +49,3 @@
     cursor: pointer;
   }
 </style>
-
-<button on:click={getRandomSetting}><i class="fas fa-random" /></button>

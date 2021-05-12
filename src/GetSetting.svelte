@@ -1,11 +1,9 @@
 <script>
   import { query, operationStore } from '@urql/svelte';
-  import { getContext } from 'svelte';
+  import { nameState, tenoriState } from './stores';
   import Modal from './Modal.svelte';
   export let isSaving = false;
 
-  const context = getContext('value');
-  const nameContext = getContext('name');
   let open = false;
   let id = '';
   let errors = {};
@@ -50,8 +48,8 @@
   function updateContext(query) {
     const { value, name } = query;
     const setting = JSON.parse(value);
-    nameContext.update(() => name);
-    context.update((store) => {
+    nameState.update(() => name);
+    tenoriState.update((store) => {
       setting.play = false;
       if (store.play) {
         setting.play = true;
@@ -65,6 +63,22 @@
     element.focus();
   }
 </script>
+
+<button on:click={toggle}><i class="fas fa-file-download" /></button>
+<Modal bind:open loading={$getSettingQuery.fetching}>
+  <form
+    class="get-setting-form"
+    on:submit|preventDefault={getSetting}
+    on:keydown={(e) => e.key === 'Enter' && getSetting()}
+  >
+    <label for="id-num"> ID </label>
+    <input type="text" id="id-num" placeholder="Setting ID" bind:value={id} use:focus />
+    <button disabled={!id.length} type="submit"><i class="fas fa-paper-plane" /></button>
+  </form>
+  <div class="errors">
+    {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
+  </div>
+</Modal>
 
 <style>
   button {
@@ -102,18 +116,3 @@
     text-align: center;
   }
 </style>
-
-<button on:click={toggle}><i class="fas fa-file-download" /></button>
-<Modal bind:open loading={$getSettingQuery.fetching}>
-  <form
-    class="get-setting-form"
-    on:submit|preventDefault={getSetting}
-    on:keydown={(e) => e.key === 'Enter' && getSetting()}>
-    <label for="id-num"> ID </label>
-    <input type="text" id="id-num" placeholder="Setting ID" bind:value={id} use:focus />
-    <button disabled={!id.length} type="submit"><i class="fas fa-paper-plane" /></button>
-  </form>
-  <div class="errors">
-    {#each Object.entries(errors) as [, error]}<span>{error}</span>{/each}
-  </div>
-</Modal>
