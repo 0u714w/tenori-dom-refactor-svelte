@@ -1,5 +1,5 @@
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
+import { AudioContext } from 'standardized-audio-context';
+const audioContext = new AudioContext()
 export default function ToneGenerator({ frequency, wave, octave, release, volume }) {
   const waves = [
     'triangle',
