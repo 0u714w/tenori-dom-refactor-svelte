@@ -7,6 +7,7 @@
   "dependencies": {
     "@urql/svelte": "^1.1.4",
     "graphql": "^15.4.0",
+    "standardized-audio-context": "^25.2.1",
     "svelte": "^3.24.0",
     "svelte-apollo": "^0.4.0"
   },
