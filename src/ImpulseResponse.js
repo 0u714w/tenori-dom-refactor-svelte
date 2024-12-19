@@ -65,33 +65,12 @@ async function convertBFormToStereoUHJ(filename) {
     const audioContext = new AudioContext();
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
   
-    // Separate channels
-    const W = audioBuffer.getChannelData(0);
-    const X = audioBuffer.getChannelData(1);
-    const Y = audioBuffer.getChannelData(2);
-  
     // Get number of elements for FFT
     const N = W.length;
   
     // Create p and j
     const p = 90 * Math.PI / 180;
     const j = complex(Math.cos(p), Math.sin(p));
-  
-    // Perform FFT
-    const fftW = fft(W);
-    const fftX = fft(X);
-    const fftY = fft(Y);
-  
-    // Compute left and right channels
-    const L = ifft(fftW.map((val, i) => 0.5 * (0.9397 * val + 0.18568 * fftX[i] - j * 0.342 * val + j * 0.5099 * fftX[i] + 0.655 * fftY[i])));
-    const R = ifft(fftW.map((val, i) => 0.5 * (0.9397 * val + 0.18568 * fftX[i] + j * 0.342 * val - j * 0.5099 * fftX[i] - 0.655 * fftY[i])));
-  
-    // Create stereo output
-    const stereoOut = new Float32Array(2 * N);
-    for (let i = 0; i < N; i++) {
-      stereoOut[2 * i] = L[i].re;
-      stereoOut[2 * i + 1] = R[i].re;
-    }
   
     // Create a new audio buffer for the stereo output
     const stereoBuffer = audioContext.createBuffer(2, N, audioBuffer.sampleRate);
