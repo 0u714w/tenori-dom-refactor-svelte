@@ -4,6 +4,8 @@
   import StartStop from './StartStop';
   import Controls from './Controls.svelte';
   import { initClient } from '@urql/svelte';
+  import ToneGenerator from './ToneGenerator.js';
+  import generateImpulseResponse from './ImpulseResponse.js';
 
   const dev = import.meta.env.NODE_ENV === 'development';
   const url = dev ? 'http://localhost:3000' : 'https://tenori-api.herokuapp.com/';
@@ -11,6 +13,17 @@
   initClient({
     url,
   });
+
+  let frequency = 440; // Example frequency
+  let wave = 0; // Index for 'triangle' wave
+  let octave = 1; // Example octave
+  let release = 1; // Example release time
+  let volume = 0.5; // Example volume
+
+  async function playTone() {
+    const reverbFile = await generateImpulseResponse();
+    await ToneGenerator({ frequency, wave, octave, release, volume, reverbInput: reverbFile });
+  }
 </script>
 
 <div class="App">
@@ -18,6 +31,7 @@
   <StartStop />
   <NoteGrid />
   <Controls />
+  <button on:click={playTone}>Play Tone with Reverb</button>
 </div>
 
 <style>

@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "@urql/svelte": "./@urql/svelte.js",
+    "fft-js": "./fft-js.js",
+    "mathjs": "./mathjs.js",
+    "standardized-audio-context": "./standardized-audio-context.js",
+    "svelte/internal": "./svelte/internal.js",
+    "svelte/store": "./svelte/store.js",
+    "svelte/transition": "./svelte/transition.js"
+  }
+}
